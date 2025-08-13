@@ -34,7 +34,15 @@ public class MainViewModel : INotifyPropertyChanged
 
     public MainViewModel()
     {
-        MakeMoveCommand = new RelayCommand(p => MakeMove((int)p!), p => CanMakeMove((int)p!));
+        MakeMoveCommand = new RelayCommand(
+            p =>
+            {
+                if (TryGetIndex(p, out var index))
+                {
+                    MakeMove(index);
+                }
+            },
+            p => TryGetIndex(p, out var index) && CanMakeMove(index));
         NewGameCommand = new RelayCommand(_ => NewGame());
         ToggleModeCommand = new RelayCommand(_ => ToggleMode());
         UpdateBoard();
@@ -105,6 +113,17 @@ public class MainViewModel : INotifyPropertyChanged
         {
             Status = $"Turn: {_game.CurrentPlayer}";
         }
+    }
+
+    private static bool TryGetIndex(object? parameter, out int index)
+    {
+        if (parameter is null)
+        {
+            index = -1;
+            return false;
+        }
+
+        return int.TryParse(parameter.ToString(), out index);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
