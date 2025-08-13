@@ -23,10 +23,17 @@ public class MainViewModel : INotifyPropertyChanged
     public bool PlayVsRandom
     {
         get => _playVsRandom;
-        set { _playVsRandom = value; OnPropertyChanged(); OnPropertyChanged(nameof(ModeText)); }
+        set
+        {
+            _playVsRandom = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(ModeText));
+            OnPropertyChanged(nameof(ModeIndicator));
+        }
     }
 
-    public string ModeText => PlayVsRandom ? "Play vs Random" : "Play vs Human";
+    public string ModeText => PlayVsRandom ? "Vs Computer" : "Vs Human";
+    public string ModeIndicator => PlayVsRandom ? "Playing vs Computer" : "Playing vs Human";
 
     public ICommand MakeMoveCommand { get; }
     public ICommand NewGameCommand { get; }
