@@ -9,15 +9,15 @@
             <TextBlock Text="{Binding ModeIndicator}" Margin="5" VerticalAlignment="Center" FontWeight="Bold" Foreground="Blue"/>
         </StackPanel>
         <UniformGrid Rows="3" Columns="3" Margin="10">
-            <Button Content="{Binding BoardView[0]}" Command="{Binding MakeMoveCommand}" CommandParameter="0" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[1]}" Command="{Binding MakeMoveCommand}" CommandParameter="1" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[2]}" Command="{Binding MakeMoveCommand}" CommandParameter="2" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[3]}" Command="{Binding MakeMoveCommand}" CommandParameter="3" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[4]}" Command="{Binding MakeMoveCommand}" CommandParameter="4" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[5]}" Command="{Binding MakeMoveCommand}" CommandParameter="5" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[6]}" Command="{Binding MakeMoveCommand}" CommandParameter="6" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[7]}" Command="{Binding MakeMoveCommand}" CommandParameter="7" FontSize="32" Margin="1"/>
-            <Button Content="{Binding BoardView[8]}" Command="{Binding MakeMoveCommand}" CommandParameter="8" FontSize="32" Margin="1"/>
+            <Button Content="{Binding BoardView[0]}" Command="{Binding MakeMoveCommand}" CommandParameter="0" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[1]}" Command="{Binding MakeMoveCommand}" CommandParameter="1" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[2]}" Command="{Binding MakeMoveCommand}" CommandParameter="2" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[3]}" Command="{Binding MakeMoveCommand}" CommandParameter="3" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[4]}" Command="{Binding MakeMoveCommand}" CommandParameter="4" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[5]}" Command="{Binding MakeMoveCommand}" CommandParameter="5" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[6]}" Command="{Binding MakeMoveCommand}" CommandParameter="6" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[7]}" Command="{Binding MakeMoveCommand}" CommandParameter="7" FontSize="32" Width="80" Height="80" Margin="1.5"/>
+            <Button Content="{Binding BoardView[8]}" Command="{Binding MakeMoveCommand}" CommandParameter="8" FontSize="32" Width="80" Height="80" Margin="1.5"/>
         </UniformGrid>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding Status}" HorizontalAlignment="Center" Margin="10" FontSize="16"/>
     </DockPanel>
