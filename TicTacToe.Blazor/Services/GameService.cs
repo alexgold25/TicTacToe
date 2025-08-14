@@ -44,16 +44,15 @@ public class GameService
 
     public void MakeMove(int index)
     {
-        if (index < 0 || index > 8) return;
+        if (Game.IsGameOver || index < 0 || index > 8) return;
+        if (Game.Board[index] != Cell.Empty) return;
 
         // ход игрока
         if (!Game.MakeMove(index)) return;
 
         UpdateWinVisuals();
         UpdateView();
-        Notify();
 
-        // если игра завершилась после хода игрока
         if (Game.IsGameOver)
         {
             ApplyScore();
@@ -79,7 +78,6 @@ public class GameService
             }
         }
 
-        // единое уведомление об обновлении UI
         Notify();
     }
 

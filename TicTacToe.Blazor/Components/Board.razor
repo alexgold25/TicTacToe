@@ -22,11 +22,11 @@
 <div class="board">
     @for (int i = 0; i < 9; i++)
     {
-        var occupied = !string.IsNullOrEmpty(S.View[i]);
+        var occupied = !string.IsNullOrEmpty(S.View[i]) || S.Game.IsGameOver;
         var cls = "cell" + (S.Highlight[i] ? " win" : "");
         <button class="@cls"
                 disabled="@occupied"
-                @onclick="(() => S.MakeMove(i))">
+                @onclick="() => S.MakeMove(i)">
             @S.View[i]
         </button>
     }
@@ -43,6 +43,7 @@
     {
         // один раз подписываемся на изменения сервиса
         S.Changed += StateHasChanged;
+        S.NewGame();
     }
     public void Dispose()
     {
