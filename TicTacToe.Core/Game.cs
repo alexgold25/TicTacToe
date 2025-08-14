@@ -1,3 +1,4 @@
+// TicTacToe.Core/Game.cs
 using System;
 using System.Linq;
 
@@ -5,7 +6,7 @@ namespace TicTacToe;
 
 public class Game
 {
-    private static readonly int[][] _winningLines = new int[][]
+    private static readonly int[][] _winningLines =
     {
         new[] {0,1,2},
         new[] {3,4,5},
@@ -18,13 +19,13 @@ public class Game
     };
 
     public Cell[] Board { get; } = new Cell[9];
-
     public Cell CurrentPlayer { get; private set; } = Cell.X;
-
     public bool IsGameOver { get; private set; }
-
     public Cell Winner { get; private set; } = Cell.Empty;
 
+    /// <summary>
+    /// Делает ход в ячейку pos (0..8). Возвращает true, если ход принят.
+    /// </summary>
     public bool MakeMove(int pos)
     {
         if (IsGameOver || pos < 0 || pos >= Board.Length) return false;
@@ -53,9 +54,8 @@ public class Game
     public void Reset()
     {
         for (int i = 0; i < Board.Length; i++)
-        {
             Board[i] = Cell.Empty;
-        }
+
         CurrentPlayer = Cell.X;
         Winner = Cell.Empty;
         IsGameOver = false;
@@ -65,10 +65,10 @@ public class Game
     {
         foreach (var line in _winningLines)
         {
-            if (Board[line[0]] == player && Board[line[1]] == player && Board[line[2]] == player)
-            {
+            if (Board[line[0]] == player &&
+                Board[line[1]] == player &&
+                Board[line[2]] == player)
                 return true;
-            }
         }
         return false;
     }
