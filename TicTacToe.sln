@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Core", "TicTacToe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Wpf", "TicTacToe.Wpf\TicTacToe.Wpf.csproj", "{E57B5651-EC9A-41FC-9150-923848F5ACCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Blazor", "TicTacToe.Blazor\TicTacToe.Blazor.csproj", "{0771AA3F-A19B-4F44-83AA-B7A3684F3E3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,11 +22,16 @@ Global
 		{E57B5651-EC9A-41FC-9150-923848F5ACCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E57B5651-EC9A-41FC-9150-923848F5ACCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E57B5651-EC9A-41FC-9150-923848F5ACCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0771AA3F-A19B-4F44-83AA-B7A3684F3E3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0771AA3F-A19B-4F44-83AA-B7A3684F3E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0771AA3F-A19B-4F44-83AA-B7A3684F3E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0771AA3F-A19B-4F44-83AA-B7A3684F3E3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		        SolutionGuid = {92A4CD9D-D01B-476A-BA14-3D717BAFD38A}
+		SolutionGuid = {EC1E3475-6F8A-41A0-8EAF-C08AF927998B}
 	EndGlobalSection
 EndGlobal
