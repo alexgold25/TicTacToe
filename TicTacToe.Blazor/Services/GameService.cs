@@ -46,6 +46,7 @@ public class GameService
 
         UpdateWinVisuals();
         UpdateView();
+        Notify();
 
         // если игра завершилась после хода игрока
         if (Game.IsGameOver)
