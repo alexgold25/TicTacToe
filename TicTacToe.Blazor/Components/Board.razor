@@ -1,4 +1,5 @@
-﻿@inject TicTacToe.Blazor.Services.GameService S
+@implements IDisposable
+@inject TicTacToe.Blazor.Services.GameService S
 
 <div class="top">
     <button class="btn" @onclick="S.NewGame">New Game</button>
