@@ -1,0 +1,35 @@
+﻿@inject TicTacToe.Blazor.Services.GameService S
+
+<div class="top">
+    <button class="btn" @onclick="S.NewGame">New Game</button>
+
+    <label class="toggle">
+        <input type="checkbox" @bind="S.PlayVsRandom" />
+        <span>@(S.PlayVsRandom ? "Vs Computer" : "Vs Human")</span>
+    </label>
+
+    <span class="status">@S.Status</span>
+    <span class="score">@S.ScoresText</span>
+</div>
+
+<div class="board">
+    @for (int i = 0; i < 9; i++)
+    {
+        var occupied = !string.IsNullOrEmpty(S.View[i]);
+        var cls = "cell" + (S.Highlight[i] ? " win" : "");
+        <button class="@cls" disabled="@occupied" @onclick="() => S.MakeMove(i)">
+            @S.View[i]
+        </button>
+    }
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        S.Changed += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        S.Changed -= StateHasChanged;
+    }
+}

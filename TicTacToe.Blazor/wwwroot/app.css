@@ -1,0 +1,120 @@
+﻿:root {
+    --bg: #0E1116;
+    --panel: #121722;
+    --cell: #1A202C;
+    --cell-border: #2B3242;
+    --fg: #E6EAF2;
+    --muted: #B9C0CE;
+    --accent: #5CA6FF
+}
+
+html, body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    margin: 0
+}
+
+h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 12px 0
+}
+
+.top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    align-items: center;
+    margin: 12px 0
+}
+
+    .btn, .top .toggle input + span {
+        background: #1C2230;
+        border: 1px solid #2C3446;
+        border-radius: 10px;
+        padding: 8px 12px;
+        color: var(--fg)
+    }
+
+.btn {
+    cursor: pointer
+}
+
+.toggle {
+    display: flex;
+    gap: 8px;
+    align-items: center
+}
+
+    .toggle input {
+        accent-color: var(--accent)
+    }
+
+.status, .score {
+    color: var(--muted)
+}
+
+.board {
+    background: var(--panel);
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid #1E2636;
+    width: min(90vw,360px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px
+}
+
+.cell {
+    aspect-ratio: 1/1;
+    border-radius: 14px;
+    border: 1px solid var(--cell-border);
+    background: var(--cell);
+    color: var(--fg);
+    font-weight: 600;
+    font-size: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .1s,background .15s,border-color .15s,box-shadow .15s
+}
+
+    .cell:hover {
+        background: #232A3A;
+        transform: translateY(-1px)
+    }
+
+    .cell:active {
+        background: #2B3446;
+        transform: translateY(0)
+    }
+
+    .cell:disabled {
+        opacity: .7;
+        cursor: not-allowed
+    }
+
+    .cell.win {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px rgba(92,166,255,.65),inset 0 0 12px rgba(92,166,255,.45)
+    }
+
+    .cell:not(:disabled) {
+        animation: none
+    }
+
+    .cell:disabled:not(.win) {
+        animation: pop .12s ease
+    }
+
+@keyframes pop {
+    from {
+        transform: scale(.6)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
