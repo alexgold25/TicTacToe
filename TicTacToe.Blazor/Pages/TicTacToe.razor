@@ -1,0 +1,127 @@
+@page "/tic-tac-toe"
+@using TicTacToe
+
+<h3>Tic Tac Toe</h3>
+
+<table>
+    @for (var row = 0; row < 3; row++)
+    {
+        <tr>
+            @for (var col = 0; col < 3; col++)
+            {
+                var index = row * 3 + col;
+                <td>
+                    <button @onclick="() => MakeMove(index)" style="width:60px;height:60px;font-size:24px">
+                        @Display(Game.Board[index])
+                    </button>
+                </td>
+            }
+        </tr>
+    }
+</table>
+
+<p>@Status</p>
+<p>Score X:@scoreX O:@scoreO D:@draws</p>
+<p>Mode: @(playVsComputer ? "Vs Computer" : "Vs Human")</p>
+
+<button @onclick="NewGame">New Game</button>
+<button @onclick="() => SetVs(false)">Play vs Human</button>
+<button @onclick="() => SetVs(true)">Play vs Computer</button>
+<button @onclick="ResetScores">Reset Scores</button>
+
+@code {
+    private Game Game = new();
+    private RandomBot Bot = new();
+    private bool playVsComputer = true;
+    private int scoreX, scoreO, draws;
+    private string Status = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        UpdateStatus();
+    }
+
+    private void MakeMove(int index)
+    {
+        if (!Game.MakeMove(index)) return;
+        UpdateStatus();
+        if (Game.IsGameOver)
+        {
+            ApplyScore();
+            return;
+        }
+
+        if (playVsComputer && Game.CurrentPlayer == Cell.O)
+        {
+            var move = Bot.GetMove(Game.Board);
+            if (move >= 0)
+            {
+                Game.MakeMove(move);
+                UpdateStatus();
+                if (Game.IsGameOver)
+                {
+                    ApplyScore();
+                }
+            }
+        }
+    }
+
+    private static string Display(Cell cell) => cell switch
+    {
+        Cell.X => "X",
+        Cell.O => "O",
+        _ => string.Empty
+    };
+
+    private void UpdateStatus()
+    {
+        if (Game.IsGameOver)
+        {
+            Status = Game.Winner switch
+            {
+                Cell.X => "Winner: X",
+                Cell.O => "Winner: O",
+                _ => "Draw"
+            };
+        }
+        else
+        {
+            Status = $"Turn: {Game.CurrentPlayer}";
+        }
+    }
+
+    private void ApplyScore()
+    {
+        switch (Game.Winner)
+        {
+            case Cell.X:
+                scoreX++;
+                break;
+            case Cell.O:
+                scoreO++;
+                break;
+            default:
+                draws++;
+                break;
+        }
+    }
+
+    private void NewGame()
+    {
+        Game.Reset();
+        UpdateStatus();
+    }
+
+    private void SetVs(bool computer)
+    {
+        playVsComputer = computer;
+        NewGame();
+    }
+
+    private void ResetScores()
+    {
+        scoreX = scoreO = draws = 0;
+        NewGame();
+    }
+}
+
