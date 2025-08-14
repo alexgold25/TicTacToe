@@ -1,12 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Components.Routing
 
 <Router AppAssembly="@typeof(App).Assembly" PreferExactMatches="true">
-  <Found>
-    <RouteView />
-  </Found>
-  <NotFound>
-    <LayoutView>
-      <p>Page not found.</p>
-    </LayoutView>
-  </NotFound>
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <LayoutView>
+            <p>Page not found.</p>
+        </LayoutView>
+    </NotFound>
 </Router>

@@ -1,4 +1,4 @@
-﻿using TicTacToe; // из TicTacToe.Core
+﻿using TicTacToe; // из твоего Core
 
 namespace TicTacToe.Blazor.Services;
 
@@ -14,12 +14,12 @@ public class GameService
     public bool[] Highlight { get; } = new bool[9];
 
     private int _scoreX, _scoreO, _draws;
-    public string ScoresText => $"Score X:{_scoreX} O:{_scoreO} D:{_draws}";
 
-    public string Status =>
+    public string ScoresText => $"Score X:{_scoreX} O:{_scoreO} D:{_draws}";
+    public string TurnText =>
         Game.IsGameOver
             ? (Game.Winner == Cell.Empty ? "Draw" : $"Winner: {Game.Winner}")
-            : $"Turn: {Game.CurrentPlayer}";
+            : $"{Game.CurrentPlayer}";
 
     public event Action? Changed;
     private void Notify() => Changed?.Invoke();
@@ -39,28 +39,41 @@ public class GameService
 
     public void MakeMove(int index)
     {
+        if (index < 0 || index > 8) return;
+
+        // ход игрока
         if (!Game.MakeMove(index)) return;
+
         UpdateWinVisuals();
         UpdateView();
 
+        // если игра завершилась после хода игрока
         if (Game.IsGameOver)
         {
             ApplyScore();
+            if (SoundEnabled) TryPlayWin();
             Notify();
             return;
         }
 
+        // ход бота по необходимости
         if (PlayVsRandom && Game.CurrentPlayer == Cell.O)
         {
             var m = _bot.GetMove(Game.Board);
-            if (m >= 0)
+            if (m >= 0 && Game.MakeMove(m))
             {
-                Game.MakeMove(m);
                 UpdateWinVisuals();
                 UpdateView();
+
+                if (Game.IsGameOver)
+                {
+                    ApplyScore();
+                    if (SoundEnabled) TryPlayWin();
+                }
             }
         }
 
+        // единое уведомление об обновлении UI
         Notify();
     }
 
@@ -111,5 +124,10 @@ public class GameService
                 break;
             }
         }
+    }
+
+    private static void TryPlayWin()
+    {
+        // В WASM без JS-аудио оставим пусто (можно добавить IJSRuntime и проигрывать короткий звук)
     }
 }

@@ -3,12 +3,18 @@
 <div class="top">
     <button class="btn" @onclick="S.NewGame">New Game</button>
 
+    <!-- Переключатель режима отдельной кнопкой -->
+    <button class="btn" @onclick="ToggleMode">
+        @(S.PlayVsRandom ? "Vs Computer" : "Vs Human")
+    </button>
+
+    <!-- Независимый чекбокс звука -->
     <label class="toggle">
-        <input type="checkbox" @bind="S.PlayVsRandom" />
-        <span>@(S.PlayVsRandom ? "Vs Computer" : "Vs Human")</span>
+        <input type="checkbox" @bind="S.SoundEnabled" />
+        <span>Sound</span>
     </label>
 
-    <span class="status">@S.Status</span>
+    <span class="status">Turn: @S.TurnText</span>
     <span class="score">@S.ScoresText</span>
 </div>
 
@@ -17,7 +23,9 @@
     {
         var occupied = !string.IsNullOrEmpty(S.View[i]);
         var cls = "cell" + (S.Highlight[i] ? " win" : "");
-        <button class="@cls" disabled="@occupied" @onclick="() => S.MakeMove(i)">
+        <button class="@cls"
+                disabled="@occupied"
+                @onclick="(() => S.MakeMove(i))">
             @S.View[i]
         </button>
     }
@@ -26,10 +34,17 @@
 @code {
     protected override void OnInitialized()
     {
+        // один раз подписываемся на изменения сервиса
         S.Changed += StateHasChanged;
     }
     public void Dispose()
     {
         S.Changed -= StateHasChanged;
+    }
+
+    private void ToggleMode()
+    {
+        S.PlayVsRandom = !S.PlayVsRandom;
+        S.NewGame(); // перезапуск при смене режима
     }
 }
