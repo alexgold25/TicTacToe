@@ -30,6 +30,12 @@
             @S.View[i]
         </button>
     }
+    @if (S.WinLine is { } line)
+    {
+        <svg class="win-line" viewBox="0 0 3 3">
+            <line x1="@line.X1" y1="@line.Y1" x2="@line.X2" y2="@line.Y2" />
+        </svg>
+    }
 </div>
 
 @code {
