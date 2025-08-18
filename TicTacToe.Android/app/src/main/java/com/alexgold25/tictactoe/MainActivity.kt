@@ -36,8 +36,8 @@ private val Accent     = Color(0xFF3AAFFF)
 private val AccentSoft = Color(0x593AAFFF)  // акцент с альфой для свечения
 private val TextSoft   = Color(0xFFBFE6FF)
 private val Corner     = 16.dp
-private val Border     = Color(0xFF3A424C)  // было темнее; сделали контрастнее
-private val BorderGlow = Accent            // акцент для победных
+//private val Border     = Color(0xFF3A424C)  // было темнее; сделали контрастнее
+//private val BorderGlow = Accent            // акцент для победных
 
 
 // ----- Типографика (строго, аккуратно) ---------------------------------------
