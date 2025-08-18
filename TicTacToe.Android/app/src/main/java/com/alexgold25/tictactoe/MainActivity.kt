@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
@@ -25,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.foundation.border
 import androidx.compose.ui.draw.clip
 
@@ -118,10 +116,13 @@ fun TicTacToeScreen(vm: GameViewModel) {
                 OutlinedButton(
                     onClick = { vm.playVsBot = !vm.playVsBot },
                     shape = RoundedCornerShape(Corner),
-                    border = ButtonDefaults.outlinedButtonBorder.copy(width = 1.dp),
+                    border = ButtonDefaults.outlinedButtonBorder(enabled = true),
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = TextSoft)
                 ) {
-                    Text(if (vm.playVsBot) "Vs Computer" else "Vs Human", style = MaterialTheme.typography.labelLarge)
+                    Text(
+                        text = if (vm.playVsBot) "Vs Computer" else "Vs Human",
+                        style = MaterialTheme.typography.labelLarge
+                    )
                 }
             }
 
@@ -194,26 +195,26 @@ fun BoardGrid(
     Box(Modifier.size(boardSize)) {
 
         // — тонкие линии сетки под кнопками (видно даже на автояркости)
-        Canvas(Modifier.matchParentSize().padding(6.dp)) {
-            val gap = 12.dp.toPx()  // 6dp + 6dp
-            val w = this.size.width
-            val h = this.size.height
-
-            val innerW = w - 2 * gap
-            val innerH = h - 2 * gap
-            val cellW = innerW / 3f
-            val cellH = innerH / 3f
-
-            val gridColor = Border.copy(alpha = 0.85f)
-            val gridStroke = 1.25.dp.toPx()
-
-            // вертикальные
-            drawLine(gridColor, Offset(gap + cellW, 0f),           Offset(gap + cellW, h),           gridStroke)
-            drawLine(gridColor, Offset(gap + 2*cellW + gap, 0f),   Offset(gap + 2*cellW + gap, h),   gridStroke)
-            // горизонтальные
-            drawLine(gridColor, Offset(0f, gap + cellH),           Offset(w,  gap + cellH),          gridStroke)
-            drawLine(gridColor, Offset(0f, gap + 2*cellH + gap),   Offset(w,  gap + 2*cellH + gap),  gridStroke)
-        }
+//        Canvas(Modifier.matchParentSize().padding(6.dp)) {
+//            val gap = 12.dp.toPx()  // 6dp + 6dp
+//            val w = this.size.width
+//            val h = this.size.height
+//
+//            val innerW = w - 2 * gap
+//            val innerH = h - 2 * gap
+//            val cellW = innerW / 3f
+//            val cellH = innerH / 3f
+//
+//            val gridColor = Border.copy(alpha = 0.85f)
+//            val gridStroke = 1.25.dp.toPx()
+//
+//            // вертикальные
+//            drawLine(gridColor, Offset(gap + cellW, 0f),           Offset(gap + cellW, h),           gridStroke)
+//            drawLine(gridColor, Offset(gap + 2*cellW + gap, 0f),   Offset(gap + 2*cellW + gap, h),   gridStroke)
+//            // горизонтальные
+//            drawLine(gridColor, Offset(0f, gap + cellH),           Offset(w,  gap + cellH),          gridStroke)
+//            drawLine(gridColor, Offset(0f, gap + 2*cellH + gap),   Offset(w,  gap + 2*cellH + gap),  gridStroke)
+//        }
 
         // — кнопки
         Column(Modifier.fillMaxSize()) {
@@ -255,12 +256,15 @@ fun CellButton(
     sizeHint: Dp,
     modifier: Modifier = Modifier
 ) {
-    val bg = animateColorAsState(if (highlight) CardActive else CardBg, label = "cell-bg").value
+    val bg = animateColorAsState(
+        if (highlight) CardActive else CardBg,
+        label = "cell-bg"
+    ).value
     val labelSize = (sizeHint.value / 8f).sp
 
-    val strokeW = if (highlight) 2.25.dp else 1.5.dp
-    val strokeColor = if (highlight) BorderGlow else Border
     val shape = RoundedCornerShape(12.dp)
+    val borderColor = if (highlight) Accent else Color(0x40FFFFFF) // белый с прозрачностью
+    val borderWidth = if (highlight) 2.dp else 1.dp
 
     ElevatedButton(
         onClick = onClick,
@@ -272,13 +276,21 @@ fun CellButton(
             disabledContainerColor = bg,
             disabledContentColor = Color(0x80E7EDF5)
         ),
-        elevation = ButtonDefaults.elevatedButtonElevation(2.dp, 1.dp),
+        elevation = ButtonDefaults.elevatedButtonElevation(
+            defaultElevation = 2.dp,
+            pressedElevation = 1.dp
+        ),
         contentPadding = PaddingValues(0.dp),
         modifier = modifier
-            .clip(shape) // чтобы border лёг ровно по радиусу
-            .border(strokeW, strokeColor, shape)
+            .clip(shape)
+            .border(borderWidth, borderColor, shape) // ✅ лёгкая рамка всегда
     ) {
-        Text(label, fontSize = labelSize, fontWeight = FontWeight.Black, letterSpacing = 0.5.sp)
+        Text(
+            label,
+            fontSize = labelSize,
+            fontWeight = FontWeight.Black,
+            letterSpacing = 0.5.sp
+        )
     }
 }
 
